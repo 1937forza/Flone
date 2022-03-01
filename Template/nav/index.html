@@ -1,0 +1,195 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300&family=Poppins:ital,wght@0,100;0,200;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+
+</head>    
+<header class="header">
+        <!--UPPER BAR-->
+        
+        <!--END OF UPPER BAR-->
+        <div class="container">
+            <div class="row v-center">                
+                <div class="header-item item-left">
+                    <div class="logo"><a href="#">
+                        <img src="./assets/image/logo_150x.png" alt="">
+                    </a></div>
+                </div>
+                <div class="header-item item-center">
+                    <div class="menu-overlay"></div>
+                    <nav class="menu">
+                        <div class="mobile-menu-head">
+                            <div class="go-back"><i class="fas fa-angle-left"></i></div>
+                            <div class="current-menu-title"></div>
+                            <div class="mobile-menu-close">&times;</div>
+                        </div>
+                        <ul class="menu-main">
+                            <li>
+                                <a href="#">Home</a>
+                            </li>
+
+                            <li class="menu-item-has-children">
+                                <a href="#">Shop</a>
+                            </li>
+
+                            <li class="menu-item-has-children">
+                                <a href="#">Products</a>
+                            </li>
+
+                            <li>
+                                <a href="#">Pages</a>
+                            </li>
+
+                            <li>
+                                <a href="#">Blog</a>
+                            </li>
+                            <li>
+                                <a href="#">About</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-item item-right">
+                    <a href="#" class="search">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <a href="#" class="user">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <a href="#"><i class="fas fa-shopping-cart">
+                        <span class="num-cart-product">0</span>
+                    </i>
+                    </a>
+                    
+                
+                    <div class="mobile-menu-trigger">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--SEARCH-->
+    <div class="search-bar">
+        <div class="search-input">
+            <input type="text" placeholder="Search For Product">
+            <a href="#" class="search-cancel">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+    </div>
+    </section>
+
+
+
+
+    <script>
+        const menu = document.querySelector(".menu");
+        const menuMain = menu.querySelector(".menu-main");
+        const menuTrigger = document.querySelector(".mobile-menu-trigger");
+        const goBack = menu.querySelector(".go-back");
+        const closeMenu = menu.querySelector(".mobile-menu-close");
+
+       let subMenu; 
+       menuMain.addEventListener("click", (e)=>{
+        if(e.target.closest(".menu-item-has-children")){
+            const hasChildren = e.target.closest(".menu-item-has-children");
+            showSubMenu(hasChildren)
+        }
+       });
+
+
+       goBack.addEventListener("click", ()=> {
+           hideSubMenu();
+       })
+
+       menuTrigger.addEventListener("click", ()=>{
+           toggleMenu();
+       })
+
+       closeMenu.addEventListener("click", ()=> {
+           toggleMenu();
+       })
+
+       document.querySelector(".menu-overlay").addEventListener("click", ()=> {
+           toggleMenu();
+       })
+
+       function toggleMenu(){
+           menu.classList.toggle("active");
+           document.querySelector(".menu-overlay").classList.toggle("active");
+       }
+
+       function showSubMenu(hasChildren){
+        subMenu = hasChildren.querySelector(".sub-menu");
+        subMenu.classList.add("active");
+        subMenu.style.animation ="slideLeft 0.5s ease forwards";
+        const menuTitle = hasChildren.querySelector("i").parentNode.childNodes[0].textContent;
+        menu.querySelector(".current-menu-title").innerHTML = menuTitle;
+        menu.querySelector(".mobile-menu-head").classList.add("active");
+       }
+
+       function hideSubMenu() {
+        subMenu.style.animation ="slideRight 0.5s ease forwards";
+        setTimeout(()=> {
+            subMenu.classList.remove("active");
+        },300);
+        menu.querySelector(".current-menu-title").innerHTML = "";
+        menu.querySelector(".mobile-menu-head").classList.remove("active");
+       }
+
+       window.onresize = function(){
+           if(this.innerWidth > 991){
+               if(menu.classList.containes("active")){
+                   toggleMenu();
+               }
+           }
+       };
+
+       const productStyles = document.querySelectorAll(".product-styles");
+
+       for(let i = 0; i < productStyles.length; i++){
+           for (let j = 0; j< productStyles[i].children.length; j++){
+               productStyles[i].children[j].addEventListener("click", function(){
+                   const productThumb = this.parentElement.parentElement;
+                   const proThumbImage = productThumb.querySelector(".pro-thumb-img");
+                   proThumbImage.src=this.getAttribute("data-image")
+                   updateStyle(j, this.parentElement)
+               })
+           }
+       };
+
+       function updateStyle(numb, proStyle){
+           for (let i = 0; i < proStyle.children.length; i++){
+               if(i==numb){
+                   proStyle.children[i].classList.add("active-style");
+               }else{
+                proStyle.children[i].classList.remove("active-style");
+               }
+           }
+       };
+
+       // Search BUtton
+
+       $(document).on('click', '.search', function(){
+           $('.search-bar').addClass('search-bar-active')
+       });
+
+       $(document).on('click', '.search-cancel', function(){
+           $('.search-bar').removeClass('search-bar-active')
+       });
+
+    </script>
+
+</body>
+</html>

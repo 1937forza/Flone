@@ -1,0 +1,8 @@
+
+about , contact , register , sign   okeydi !!
+
+ - Demek . ilk olaraq navbar , daha sonra slider hissesi hazirdi (papkadan copy edb yerlesdrmek)
+ - Slider altnda olan iconlara hover olduqda titreme
+ - Iconlardan altdaki sectionda sekle hover olduqda add to cart ... urek falan gelmesi
+ - klik olanda shop / detail hissesi 
+ - Ve Shop Page
